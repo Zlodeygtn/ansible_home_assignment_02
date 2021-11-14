@@ -1,0 +1,14 @@
+---
+- name: Bulk users creation
+  hosts: nodes
+  vars_files:
+    - vars/users.yml
+  tasks:
+    - name: Creating user "{{ item }}"
+      user: 
+        name: "{{ item }}"
+        comment: "{{ item }}@example.com"
+        home: "/home/{{ item }}"
+      with_items:
+        - "{{ Username }}"
+...
