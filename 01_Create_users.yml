@@ -3,12 +3,15 @@
   hosts: nodes
   vars_files:
     - vars/users.yml
+    - vars/password.yml
   tasks:
-    - name: Creating user "{{ item }}"
+    - name: Creating users
       user: 
         name: "{{ item }}"
         comment: "{{ item }}@example.com"
         home: "/home/{{ item }}"
+        password: "{{ password | password_hash('sha512') }}"
+        update_password: on_create
       with_items:
         - "{{ Username }}"
 ...
